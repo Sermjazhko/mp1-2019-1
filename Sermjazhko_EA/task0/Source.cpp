@@ -18,7 +18,7 @@ public:
   }
   void printlen()
   {
-    cout << meters << " ì.";
+    cout << meters << " Ð¼.";
   }
   float ft()
   {
@@ -49,7 +49,7 @@ int main(void)
   float a = -1;
   int unit = -1;
 
-  cout << "Ââåäèòå äëèíó â ìåòðàõ:\n";
+  cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð´Ð»Ð¸Ð½Ñƒ Ð² Ð¼ÐµÑ‚Ñ€Ð°Ñ…:\n";
   while (a < 0)
     cin >> a;
 
@@ -57,26 +57,26 @@ int main(void)
 
   len.printlen();
 
-  cout << "Âûáåðèòå åäèíèöó èçìåðåíèÿ:\n0 - Ôóò\n1 - ßðä\n2 - Àðøèí\n3 - Ñàæåíü\n4 - Äþéì\n";
+  cout << "Ð’Ñ‹Ð±ÐµÑ€Ð¸Ñ‚Ðµ ÐµÐ´Ð¸Ð½Ð¸Ñ†Ñƒ Ð¸Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ñ:\n0 - Ð¤ÑƒÑ‚\n1 - Ð¯Ñ€Ð´\n2 - ÐÑ€ÑˆÐ¸Ð½\n3 - Ð¡Ð°Ð¶ÐµÐ½ÑŒ\n4 - Ð”ÑŽÐ¹Ð¼\n";
   while ((unit < 0) || (unit > 4))
     cin >> unit;
 
   switch (unit)
   {
   case 0:
-    cout << a << " - " << len.ft() << " ôóòà\n";
+    cout << a << " - " << len.ft() << " Ñ„ÑƒÑ‚Ð°\n";
     break;
   case 1:
-    cout << a << " - " << len.yard() << " ÿðäà\n";
+    cout << a << " - " << len.yard() << " ÑÑ€Ð´Ð°\n";
     break;
   case 2:
-    cout << a << " - " << len.arshin() << " àðøèíà\n";
+    cout << a << " - " << len.arshin() << " Ð°Ñ€ÑˆÐ¸Ð½Ð°\n";
     break;
   case 3:
-    cout << a << " - " << len.sazhen() << " ñàæíåé\n";
+    cout << a << " - " << len.sazhen() << " ÑÐ°Ð¶Ð½ÐµÐ¹\n";
     break;
   case 4:
-    cout << a << " - " << len.inch() << " äþéìà\n";
+    cout << a << " - " << len.inch() << " Ð´ÑŽÐ¹Ð¼Ð°\n";
     break;
   }
   cin >> a;
