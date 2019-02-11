@@ -1,13 +1,10 @@
 #include <iostream>
 #include <clocale> 
 using namespace std;
-
 class length
 {
   float meters;
-
 public:
-
   length()
   {
     meters = 0;
@@ -41,26 +38,19 @@ public:
     return meters * 39.37007874016;
   }
 };
-
 int main(void)
 {
   setlocale(LC_ALL, "Rus");
-
   float a = -1;
   int unit = -1;
-
   cout << "Введите длину в метрах:\n";
   while (a < 0)
     cin >> a;
-
   length len(a);
-
   len.printlen();
-
   cout << "Выберите единицу измерения:\n0 - Фут\n1 - Ярд\n2 - Аршин\n3 - Сажень\n4 - Дюйм\n";
   while ((unit < 0) || (unit > 4))
     cin >> unit;
-
   switch (unit)
   {
   case 0:
