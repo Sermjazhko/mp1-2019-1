@@ -13,9 +13,18 @@ public:
   {
     meters = n;
   }
+  length(const length &len)
+  {
+    meters = len.meters;
+  }
+  length& operator=(const length &len)
+  {
+    meters = len.meters;
+    return *this;
+  }
   void printlen()
   {
-    cout << meters << " м.";
+    cout << meters << " м. ";
   }
   float ft()
   {
@@ -44,29 +53,44 @@ int main(void)
   float a = -1;
   int unit = -1;
   cout << "Введите длину в метрах:\n";
-  while (a < 0)
+  do
+  {
     cin >> a;
+    if (a < 0)
+      cout << "Неверные данные, попробуйте ещё раз:\n";
+  } while (a < 0);
   length len(a);
-  len.printlen();
+  length check;
+
+  check = len;
   cout << "Выберите единицу измерения:\n0 - Фут\n1 - Ярд\n2 - Аршин\n3 - Сажень\n4 - Дюйм\n";
-  while ((unit < 0) || (unit > 4))
+  do
+  {
     cin >> unit;
+    if ((unit < 0) || (unit > 4))
+      cout << "Неверные данные, попробуйте ещё раз:\n";
+  } while ((unit < 0) || (unit > 4));
   switch (unit)
   {
   case 0:
-    cout << a << " - " << len.ft() << " фута\n";
+    check.printlen();
+    cout << "это " << len.ft() << " фута\n";
     break;
   case 1:
-    cout << a << " - " << len.yard() << " ярда\n";
+    check.printlen();
+    cout << "это " << len.yard() << " ярда\n";
     break;
   case 2:
-    cout << a << " - " << len.arshin() << " аршина\n";
+    check.printlen();
+    cout << "это " << len.arshin() << " аршина\n";
     break;
   case 3:
-    cout << a << " - " << len.sazhen() << " сажней\n";
+    check.printlen();
+    cout << "это " << len.sazhen() << " сажней\n";
     break;
   case 4:
-    cout << a << " - " << len.inch() << " дюйма\n";
+    check.printlen();
+    cout << "это " << len.inch() << " дюйма\n";
     break;
   }
   cin >> a;
