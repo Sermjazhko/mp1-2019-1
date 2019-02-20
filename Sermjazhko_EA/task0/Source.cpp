@@ -1,23 +1,23 @@
 #include <iostream>
 #include <clocale> 
 using namespace std;
-class conver
+class LengthConverter
 {
   float meters;
 public:
-  conver()
+  LengthConverter()
   {
     meters = 0;
   }
-  conver(float n)
+  LengthConverter(float n)
   {
     meters = n;
   }
-  conver(const conver &len)
+  LengthConverter(const LengthConverter &len)
   {
     meters = len.meters;
   }
-  conver& operator=(const conver &len)
+  LengthConverter& operator=(const LengthConverter &len)
   {
     meters = len.meters;
     return *this;
@@ -59,8 +59,8 @@ int main(void)
     if (a < 0)
       cout << "Неверные данные, попробуйте ещё раз:\n";
   } while (a < 0);
-  conver len(a);
-  conver check;
+  LengthConverter len(a);
+  LengthConverter check;
 
   check = len;
   cout << "Выберите единицу измерения:\n0 - Фут\n1 - Ярд\n2 - Аршин\n3 - Сажень\n4 - Дюйм\n";
