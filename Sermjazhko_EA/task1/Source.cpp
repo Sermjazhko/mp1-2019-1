@@ -108,6 +108,7 @@ public:
   ~DynamicArray() //деструктор
   {
     delete[] m_array;
+    delete[] subarray;
   }
 };
 int check(int left, int right, int &value)
