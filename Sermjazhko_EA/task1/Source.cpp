@@ -7,13 +7,13 @@ class DynamicArray
   int array_size;
   int *subarray;
 public:
-  DynamicArray()              // конструктор по умолчанию
+  DynamicArray()              // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
   {
     array_size = 0;
     m_array = new int[0];
     subarray = new int[0];
   }
-  DynamicArray(int size)// конструктор 
+  DynamicArray(int size)// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ 
   {
     int i;
     m_array = new int[size];
@@ -21,7 +21,7 @@ public:
       m_array[i] = i;
     array_size = size;
   }
-  DynamicArray(const DynamicArray &object)// конструктор копирования
+  DynamicArray(const DynamicArray &object)// РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
   {
     int i;
     m_array = new int[object.array_size];
@@ -29,7 +29,7 @@ public:
     for (i = 0; i < object.array_size; i++)
       m_array[i] = object.m_array[i];
   }
-  DynamicArray& operator=(const DynamicArray &object)//  оператор присваивания
+  DynamicArray& operator=(const DynamicArray &object)//  РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
   {
     int i;
     m_array = new int[object.array_size];
@@ -38,30 +38,30 @@ public:
     array_size = object.array_size;
     return *this;
   }
-  void setArray(int size) //задание массива вручную
+  void setArray(int size) //Р·Р°РґР°РЅРёРµ РјР°СЃСЃРёРІР° РІСЂСѓС‡РЅСѓСЋ
   {
     int i = 0, l;
     for (i; i < size; i++)
     {
-      cout << "Элемент " << i << ": ";
+      cout << "Р­Р»РµРјРµРЅС‚ " << i << ": ";
       cin >> l;
       m_array[i] = l;
     }
   }
-  void setElement(int index, int number)// вывод/изменение элемента
+  void setElement(int index, int number)// РІС‹РІРѕРґ/РёР·РјРµРЅРµРЅРёРµ СЌР»РµРјРµРЅС‚Р°
   {
     if (index == -1)
       cout << m_array[number];
     else
       m_array[number] = index;
   }
-  void printArray(int size) //вывод массива
+  void printArray(int size) //РІС‹РІРѕРґ РјР°СЃСЃРёРІР°
   {
     int i;
     for (i = 0; i < size; i++)
-      cout << " " << i << " элемент " << m_array[i] << "\n";
+      cout << " " << i << " СЌР»РµРјРµРЅС‚ " << m_array[i] << "\n";
   }
-  void minElement()//минимальный элемент массива
+  void minElement()//РјРёРЅРёРјР°Р»СЊРЅС‹Р№ СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР°
   {
     int i, n = 0;
     int min;
@@ -74,20 +74,20 @@ public:
         n = i + 1;
       }
     }
-    cout << "Индекс:" << n << " элемент: " << min;
+    cout << "РРЅРґРµРєСЃ:" << n << " СЌР»РµРјРµРЅС‚: " << min;
   }
-  void orderArray() // проверка массива на упорядоченность
+  void orderArray() // РїСЂРѕРІРµСЂРєР° РјР°СЃСЃРёРІР° РЅР° СѓРїРѕСЂСЏРґРѕС‡РµРЅРЅРѕСЃС‚СЊ
   {
     int i, n = 0;
     for (i = 0; i < (array_size - 1); i++)
       if (m_array[i] <= m_array[i + 1])
         n++;
     if (n == array_size - 1)
-      cout << "Массив упорядочен\n";
+      cout << "РњР°СЃСЃРёРІ СѓРїРѕСЂСЏРґРѕС‡РµРЅ\n";
     else
-      cout << "Массив неупорядочен\n";
+      cout << "РњР°СЃСЃРёРІ РЅРµСѓРїРѕСЂСЏРґРѕС‡РµРЅ\n";
   }
-  void printSubarray(int size, int arraysize) //вывод подмассива с нечетными элементами
+  void printSubarray(int size, int arraysize) //РІС‹РІРѕРґ РїРѕРґРјР°СЃСЃРёРІР° СЃ РЅРµС‡РµС‚РЅС‹РјРё СЌР»РµРјРµРЅС‚Р°РјРё
   {
     int i, j = 0;
     subarray = new int[size];
@@ -101,11 +101,11 @@ public:
         j++;
       }
     }
-    cout << "Подмассив:\n";
+    cout << "РџРѕРґРјР°СЃСЃРёРІ:\n";
     for (i = 0; i < size; i++)
       cout << subarray[i] << "\n";
   }
-  ~DynamicArray() //деструктор
+  ~DynamicArray() //РґРµСЃС‚СЂСѓРєС‚РѕСЂ
   {
     delete[] m_array;
   }
@@ -116,7 +116,7 @@ int check(int left, int right, int &value)
   {
     if ((value < left) || (value > right))
     {
-      cout << "Данные введены неверно, попробуйте ещё раз:\n";
+      cout << "Р”Р°РЅРЅС‹Рµ РІРІРµРґРµРЅС‹ РЅРµРІРµСЂРЅРѕ, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·:\n";
       cin >> value;
     }
   } while ((value < left) || (value > right));
@@ -131,78 +131,78 @@ int main()
   int size;
   double newsize;
   int min = 0;
-  cout << "Введите размер массива:\n";
+  cout << "Р’РІРµРґРёС‚Рµ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°:\n";
   cin >> size;
   do
   {
     if (size < 0)
     {
-      cout << "Данные введены неверно, попробуйте ещё раз:\n";
+      cout << "Р”Р°РЅРЅС‹Рµ РІРІРµРґРµРЅС‹ РЅРµРІРµСЂРЅРѕ, РїРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·:\n";
       cin >> size;
     }
   } while (size < 0);
   DynamicArray object(size);
   DynamicArray subarray;
-  cout << "Вы хотите сами заполнить массив?\n 0 - Нет\n 1 - Да\n";
+  cout << "Р’С‹ С…РѕС‚РёС‚Рµ СЃР°РјРё Р·Р°РїРѕР»РЅРёС‚СЊ РјР°СЃСЃРёРІ?\n 0 - РќРµС‚\n 1 - Р”Р°\n";
   cin >> index;
   check(0, 1, index);
   if (index == 0)
   {
-    cout << "\nСтандартный массив:\n";
+    cout << "\nРЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№ РјР°СЃСЃРёРІ:\n";
     object.printArray(size);
   }
   else
   {
     object.setArray(size);
-    cout << "\nВведенный массив:\n";
+    cout << "\nР’РІРµРґРµРЅРЅС‹Р№ РјР°СЃСЃРёРІ:\n";
     object.printArray(size);
   }
   do
   {
-    cout << "\nВы хотите задать элемент массива по его индексу?\n 0 - Нет\n 1 - Да\n";
+    cout << "\nР’С‹ С…РѕС‚РёС‚Рµ Р·Р°РґР°С‚СЊ СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° РїРѕ РµРіРѕ РёРЅРґРµРєСЃСѓ?\n 0 - РќРµС‚\n 1 - Р”Р°\n";
     cin >> index;
     check(0, 1, index);
     if (index == 1)
     {
-      cout << "Введите индекс элемента, который хотите изменить:\n";
+      cout << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ:\n";
       cin >> number;
       check(0, size - 1, number);
-      cout << "\nВведите новый элемент:\n" << number << " элемент: ";
+      cout << "\nР’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚:\n" << number << " СЌР»РµРјРµРЅС‚: ";
       cin >> element;
       object.setElement(element, number);
     }
   } while (index != 0);
-  cout << "\nВы хотите узнать элемент по его индексу?:\n 0 - Нет\n 1 - Да\n";
+  cout << "\nР’С‹ С…РѕС‚РёС‚Рµ СѓР·РЅР°С‚СЊ СЌР»РµРјРµРЅС‚ РїРѕ РµРіРѕ РёРЅРґРµРєСЃСѓ?:\n 0 - РќРµС‚\n 1 - Р”Р°\n";
   cin >> index;
   check(0, 1, index);
   if (index == 1)
   {
-    cout << "\nВведите индекс:\n";
+    cout << "\nР’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ:\n";
     cin >> number;
     check(0, size - 1, number);
-    cout << "\nЭлемент под номером " << number << ": ";
+    cout << "\nР­Р»РµРјРµРЅС‚ РїРѕРґ РЅРѕРјРµСЂРѕРј " << number << ": ";
     object.setElement(-1, number);
   }
-  cout << "\n\nВы хотите вывести новый массив?\n 0 - Нет\n 1 - Да\n";
+  cout << "\n\nР’С‹ С…РѕС‚РёС‚Рµ РІС‹РІРµСЃС‚Рё РЅРѕРІС‹Р№ РјР°СЃСЃРёРІ?\n 0 - РќРµС‚\n 1 - Р”Р°\n";
   cin >> index;
   check(0, 1, index);
   if (index == 1)
   {
-    cout << "Новый массив:\n";
+    cout << "РќРѕРІС‹Р№ РјР°СЃСЃРёРІ:\n";
     object.printArray(size);
   }
-  cout << "\nВы хотите узнать индекс минимального элемента?\n 0 - Нет\n 1 - Да\n";
+  cout << "\nР’С‹ С…РѕС‚РёС‚Рµ СѓР·РЅР°С‚СЊ РёРЅРґРµРєСЃ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°?\n 0 - РќРµС‚\n 1 - Р”Р°\n";
   cin >> index;
   check(0, 1, index);
   if (index == 1)
     object.minElement();
-  cout << "\n\nХотите проверить, является ли массив упорядоченным?\n 0 - Нет\n 1 - Да\n";
+  cout << "\n\nРҐРѕС‚РёС‚Рµ РїСЂРѕРІРµСЂРёС‚СЊ, СЏРІР»СЏРµС‚СЃСЏ Р»Рё РјР°СЃСЃРёРІ СѓРїРѕСЂСЏРґРѕС‡РµРЅРЅС‹Рј?\n 0 - РќРµС‚\n 1 - Р”Р°\n";
   cin >> index;
   check(0, 1, index);
   if (index == 1)
     object.orderArray();
   subarray = object;
-  cout << "\nХотите выделить подмассив с элементами нечетных индексов?\n 0 - Нет\n 1 - Да\n";
+  cout << "\nРҐРѕС‚РёС‚Рµ РІС‹РґРµР»РёС‚СЊ РїРѕРґРјР°СЃСЃРёРІ СЃ СЌР»РµРјРµРЅС‚Р°РјРё РЅРµС‡РµС‚РЅС‹С… РёРЅРґРµРєСЃРѕРІ?\n 0 - РќРµС‚\n 1 - Р”Р°\n";
   cin >> index;
   check(0, 1, index);
   if (index == 1)
