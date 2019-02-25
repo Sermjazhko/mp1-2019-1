@@ -11,7 +11,6 @@ public:
   {
     array_size = 0;
     m_array = new int[0];
-    subarray = new int[0];
   }
   DynamicArray(int size)// конструктор 
   {
@@ -48,12 +47,13 @@ public:
       m_array[i] = l;
     }
   }
-  void setElement(int index, int number)// вывод/изменение элемента
+  void setElement(int index, int number)// изменение элемента
   {
-    if (index == -1)
-      cout << m_array[number];
-    else
       m_array[number] = index;
+  }
+  void getElement(int number) //ввод
+  {
+    cout << m_array[number];
   }
   void printArray(int size) //вывод массива
   {
@@ -76,7 +76,7 @@ public:
     }
     cout << "Индекс:" << n << " элемент: " << min;
   }
-  void orderArray() // проверка массива на упорядоченность по возрастанию
+  void orderArray() // проверка массива на упорядоченность
   {
     int i, n = 0;
     for (i = 0; i < (array_size - 1); i++)
@@ -104,11 +104,11 @@ public:
     cout << "Подмассив:\n";
     for (i = 0; i < size; i++)
       cout << subarray[i] << "\n";
+    delete[] subarray;
   }
   ~DynamicArray() //деструктор
   {
     delete[] m_array;
-    delete[] subarray;
   }
 };
 int check(int left, int right, int &value)
@@ -130,7 +130,7 @@ int main()
   int number;
   int element;
   int size;
-  double newsize;
+  int newsize;
   int min = 0;
   cout << "Введите размер массива:\n";
   cin >> size;
@@ -182,7 +182,7 @@ int main()
     cin >> number;
     check(0, size - 1, number);
     cout << "\nЭлемент под номером " << number << ": ";
-    object.setElement(-1, number);
+    object.getElement(number);
   }
   cout << "\n\nВы хотите вывести новый массив?\n 0 - Нет\n 1 - Да\n";
   cin >> index;
@@ -197,7 +197,7 @@ int main()
   check(0, 1, index);
   if (index == 1)
     object.minElement();
-  cout << "\n\nХотите проверить, является ли массив упорядоченным по возрастанию?\n 0 - Нет\n 1 - Да\n";
+  cout << "\n\nХотите проверить, является ли массив упорядоченным?\n 0 - Нет\n 1 - Да\n";
   cin >> index;
   check(0, 1, index);
   if (index == 1)
@@ -208,8 +208,7 @@ int main()
   check(0, 1, index);
   if (index == 1)
   {
-    newsize = size;
-    newsize = floor(newsize / 2);
+    newsize = floor(size / 2);
     subarray.printSubarray(newsize, size);
   }
   cin >> index;
