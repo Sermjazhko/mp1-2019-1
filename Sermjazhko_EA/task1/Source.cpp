@@ -153,7 +153,7 @@ int main()
 		cout << "\nСтандартный массив:\n";
 		object.printArray(size1);
 		if (size > 10)
-			cout << "И так далее до: " << size - 1 << " элемента\n";
+			cout << "И так далее до: " << size - 1 << " индекса\n";
 	}
 	else
 		object.setArray(size);
