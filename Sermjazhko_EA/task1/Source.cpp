@@ -77,11 +77,14 @@ public:
 	}
 	void orderArray() // проверка массива на упорядоченность
 	{
-		int i, n = 0;
+		int i, n = 0, l = 0;
 		for (i = 0; i < (array_size - 1); i++)
 			if (m_array[i] <= m_array[i + 1])
 				n++;
-		if (n == array_size - 1)
+		for (i = array_size - 1; i > 0; i--)
+			if (m_array[i] <= m_array[i - 1])
+				l++;
+		if ((n == array_size - 1)|| (l == array_size - 1))
 			cout << "Массив упорядочен\n";
 		else
 			cout << "Массив неупорядочен\n";
