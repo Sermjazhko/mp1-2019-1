@@ -84,7 +84,7 @@ public:
   DynamicArray Subarray(int size, int arraysize) // создание подмассива с нечетными элементами
   {
     int i, j = 0, m = 0;
-    DynamicArray *subarray1 = new DynamicArray(size);
+    DynamicArray subarray1(size);
     double n;
     for (i = 0; i < arraysize; i++)
     {
@@ -92,7 +92,7 @@ public:
       if (n != 0)
       {
         m = m_array[i];
-        subarray1 -> setElement(m, j);
+        subarray1.setElement(m, j);
         j++;
       }
     }
