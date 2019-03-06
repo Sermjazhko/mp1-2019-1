@@ -5,7 +5,6 @@ class DynamicArray
 {
   int *m_array;
   int array_size;
-  int *subarray;
 public:
   DynamicArray()              // конструктор по умолчанию
   {
@@ -82,31 +81,26 @@ public:
     else
       return 0;
   }
-  void Subarray(int size, int arraysize) // создание подмассива с нечетными элементами
+  DynamicArray Subarray(int size, int arraysize) // создание подмассива с нечетными элементами
   {
-    int i, j = 0;
-    subarray = new int[size];
+    int i, j = 0, m = 0;
+    DynamicArray *subarray1 = new DynamicArray(size);
     double n;
     for (i = 0; i < arraysize; i++)
     {
       n = i % 2;
       if (n != 0)
       {
-        subarray[j] = m_array[i];
+        m = m_array[i];
+        subarray1 -> setElement(m, j);
         j++;
       }
     }
-  }
-  void printSubarray(int size) //вывод подмассивамассива
-  {
-    int i;
-    for (i = 0; i < size; i++)
-      cout << subarray[i] << "\n";
+    return *subarray1;
   }
   ~DynamicArray() //деструктор
   {
     delete[] m_array;
-    delete[] subarray;
   }
 };
 int check(int left, int right, int &value)
@@ -186,9 +180,9 @@ int main()
     DynamicArray subarray;
     subarray = object;
     newsize = floor(size / 2);
-    subarray.Subarray(newsize, size);
     cout << "Подмассив:\n";
-    subarray.printSubarray(newsize);
+    subarray = subarray.Subarray(newsize, size);;
+    subarray.printArray(newsize);
     cout << "Размер исходного массива: " << size << "\nРазмер подмассива:" << newsize << "\n";
   }
   cin >> index;
