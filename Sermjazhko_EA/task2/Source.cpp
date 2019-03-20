@@ -13,11 +13,12 @@ public:
   TranslatorDictionary(string _english_word, string _russian_word); //конструктор инициализации
   TranslatorDictionary(const TranslatorDictionary &str); // конструктор копирования 
   TranslatorDictionary& operator=(const TranslatorDictionary &str);// оператор присваивания
-  void addWord(TranslatorDictionary str); //добавить в словарь слово и его перевод
-  void setWord(TranslatorDictionary str, int _index); //изменить перевод
+  string addWord(string _english_word, string _russian_word, string _words); //добавить в словарь слово и его перевод
+  void setWord(string _english_word, string _russian_word, int _index); //изменить перевод
   string getWord(string str); //узнать перевод
-  string checkWord(string str); //проверить наличие слова
-  void printDictionary(); //считать словарь с количеством слов
+  bool checkWord(string str); //проверить наличие слова
+  void file_printDictionary(string _words); // сохранить словарь в файл
+  void printDictionary(); //считать словарь (с количеством слов) из файла
   ~TranslatorDictionary()//деструктор
   {}
 };
@@ -43,27 +44,27 @@ TranslatorDictionary& TranslatorDictionary::operator=(const TranslatorDictionary
   english_word = str.english_word;
   russian_word = str.russian_word;
 }
-void TranslatorDictionary::addWord(TranslatorDictionary str)
+string TranslatorDictionary::addWord(string _english_word, string _russian_word, string _words)
 {
-  setlocale(LC_ALL, "Rus");
   int line1, line2;
-  ofstream out("dictionary.txt", ios_base::app); // запись в конец файла
-  line1 = str.english_word.size();
+  line1 = _english_word.size();
   if (line1 < 20) // выравнивание в файле
   {
     for (int i = 0; i < (20 - line1); i++)
-      str.english_word += " ";
+      _english_word += " ";
   }
-  line2 = str.russian_word.size(); // количество символов в строке
+  line2 = _russian_word.size(); // количество символов в строке
   if (line2 < 20) // выравнивание в файле
   {
     for (int i = 0; i < (20 - line2); i++)
-      str.russian_word += " ";
+      _russian_word += " ";
   }
-  out << str.english_word << "— " << str.russian_word << endl;
-  out.close(); // закрывает файл для записи
+  _words += _english_word;
+  _words += _russian_word;
+  _words += '_';
+  return _words;
 }
-void TranslatorDictionary::setWord(TranslatorDictionary str, int _index)
+void TranslatorDictionary::setWord(string _english_word, string _russian_word, int _index)
 {
   ofstream f("dictionary.txt", ofstream::binary | ofstream::out | ofstream::in); //для замены текста
   int const N = 256;
@@ -77,11 +78,11 @@ void TranslatorDictionary::setWord(TranslatorDictionary str, int _index)
     size_array = strlen(ArrayWord);
     for (int j = 0, i = 0; j < size_array; j++) // поиск слова
     {
-      if (str.english_word[i] == ArrayWord[j])
+      if (_english_word[i] == ArrayWord[j])
       {
         index++;
         i++;
-        size_str = str.english_word.size();
+        size_str = _english_word.size();
         if (index == size_str && ((ArrayWord[j + 1] == ' ') || (ArrayWord[j + 1] == '—'))) // проверка полноты слова, т.е. чтобы str и string  не считались за одно слово
         {
           if (_index == 1) // замена перевода
@@ -90,7 +91,7 @@ void TranslatorDictionary::setWord(TranslatorDictionary str, int _index)
               j++;
             j = j + 3;
             f.seekp(Mysize + j);
-            f << str.russian_word;
+            f << _russian_word;
             while (ArrayWord[j + 1] == ' ')
             {
               f << " ";
@@ -104,7 +105,7 @@ void TranslatorDictionary::setWord(TranslatorDictionary str, int _index)
               j++;
             j = j + 3;
             f.seekp(Mysize);
-            f << str.russian_word;
+            f << _russian_word;
             while (ArrayWord[j + 1] == ' ')
             {
               f << " ";
@@ -157,7 +158,7 @@ string TranslatorDictionary::getWord(string str)
   str = "Нет совпадений";
   return str;
 }
-string TranslatorDictionary::checkWord(string str)
+bool TranslatorDictionary::checkWord(string str)
 {
   int const N = 256;
   int index = 0;
@@ -178,8 +179,7 @@ string TranslatorDictionary::checkWord(string str)
         if (index == size_str && ((ArrayWord[j + 1] == ' ') || (ArrayWord[j + 1] == '—')))
         {
           fin.close();
-          str = "Слово есть в словаре";
-          return str;
+          return true;
         }
       }
       else
@@ -187,8 +187,21 @@ string TranslatorDictionary::checkWord(string str)
     }
   }
   fin.close();
-  str = "Нет совпадений";
-  return str;
+  return false;
+}
+void TranslatorDictionary::file_printDictionary(string _words)
+{
+  ofstream out("dictionary.txt", ios_base::app); // запись в конец файла
+  for (int i = 0; i <= _words.size(); i++)
+  {
+    if (_words[i] == '_')
+    {
+      out << endl;
+      i++;
+    }
+    out << _words[i];
+  }
+  out.close(); // закрывает файл для записи
 }
 void TranslatorDictionary::printDictionary()
 {
@@ -214,9 +227,10 @@ int main()
   int index;
   TranslatorDictionary all;
   string l, n;
-  while (a != 5)
+  string array;
+  while (a != 6)
   {
-    cout << endl << "Введите:" << endl << "0 - добавить слово в словарь" << endl << "1 - изменить перевод" << endl << "2 - узнать перевод слова" << endl << "3 - проверить наличие" << endl << "4 - вывести словарь" << endl << "5 - завершить работу" << endl;
+    cout << endl << "Введите:" << endl << "0 - добавить слово в словарь" << endl << "1 - изменить перевод" << endl << "2 - узнать перевод слова" << endl << "3 - проверить наличие" << endl << "4 - вывести словарь из файла" << endl << "5 - сохранить в файл" << endl << "6 - завершить работу" << endl;
     cin >> a;
     switch (a)
     {
@@ -228,7 +242,7 @@ int main()
       cout << "Введите перевод:" << endl;
       getline(cin, n);
       TranslatorDictionary check(l, n);
-      check.addWord(check);
+      array = check.addWord(l, n, array);
     }
     break;
     case 1:
@@ -242,7 +256,7 @@ int main()
       getline(cin, n);
       getline(cin, n);
       TranslatorDictionary temp(l, n);
-      temp.setWord(temp, index);
+      temp.setWord(l, n, index);
     }
     break;
     case 2:
@@ -258,7 +272,10 @@ int main()
       cout << "Введите слово, которое хотите найти:" << endl;
       getline(cin, l);
       getline(cin, l);
-      cout << all.checkWord(l);
+      if (all.checkWord(l))
+        cout << "Слово найдено" << endl;
+      else
+        cout << "Слово не найдено" << endl;
     }
     break;
     case 4:
@@ -268,6 +285,12 @@ int main()
     }
     break;
     case 5:
+    {
+      all.file_printDictionary(array);
+      array = "";
+    }
+    break;
+    case 6:
       break;
       {
     default:
@@ -277,5 +300,4 @@ int main()
     }
   }
   cout << endl << "End programm!" << endl;
-  cin >> a;
 }
