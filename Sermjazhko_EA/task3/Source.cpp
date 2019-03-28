@@ -144,12 +144,10 @@ void Thermometer::observation_file(const Thermometer &observation) // Попробоват
         else
           f << time[i] << "   ";
     }
-    f << "                                    ";
-    f << endl;
+    f << "  ";
     observation_data.check_data(observation_data);
     j = observation_data.temperature_index(observation_data);
     f.seekp(j);
-    f << endl;
     f << "Temperature: ";
     for (int i = 0; i < 24; i++)
     {
@@ -159,7 +157,7 @@ void Thermometer::observation_file(const Thermometer &observation) // Попробоват
         else
           f << temperature[i] << "   ";
     }
-    f << "                                    ";
+    f << "    "; // сюда пробелы посчитать
     f.close();
     return;
   }
