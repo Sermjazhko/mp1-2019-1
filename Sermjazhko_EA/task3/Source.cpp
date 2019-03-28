@@ -90,22 +90,31 @@ void Thermometer::get_observation()
 string Thermometer::Get_temperature(Data observation)
 {
   int const N = 256;
+  int I = -100, L = -100;
   int index = 0;
   int number = 0;
   string str;
   int size_str, size_array;
   ifstream fin("Thermometer.txt");
+  ifstream check("Thermometer.txt");
   char ArrayWord[N] = { "" };
+  char Array[50];
   if (observation.check_data(observation))
   {
     while (!fin.eof())
     {
       fin.getline(ArrayWord, N); //Построчное считывание информации в массив
       size_array = strlen(ArrayWord);
+      check >> Array;
       number += size_array + 2;
       if (number == observation.temperature_index(observation))
       {
         fin.getline(ArrayWord, N);
+        check >> Array;//ДОДЕЛАТЬ
+        check >> Array;
+        I = atoi(Array);
+        L = atoi(Array+1);
+        cout << "HERE I: " << I  << " AND L " << L << endl; //ПЕРЕВОД В INT
         fin.close();
         return ArrayWord;
       }
@@ -126,7 +135,7 @@ int Thermometer::get_av_temp_d_or_n(Data observation, int index)
 {
   return 0;
 }
-void Thermometer::observation_file(const Thermometer &observation) // Попробовать считывать не индексы, а строки 
+void Thermometer::observation_file(const Thermometer &observation) 
 {
   ofstream out("Thermometer.txt", ios_base::app); // запись в конец файла 
   int i, j;
@@ -135,7 +144,7 @@ void Thermometer::observation_file(const Thermometer &observation) // Попробоват
     i = observation_data.time_index(observation_data);
     ofstream f("Thermometer.txt", ofstream::binary | ofstream::out | ofstream::in);
     f.seekp(i);
-    f << "Time: " << setw(8);;
+    f << "Time:        " ;
     for (int i = 0; i < 24; i++)
     {
       if (i == time[i])
@@ -145,7 +154,7 @@ void Thermometer::observation_file(const Thermometer &observation) // Попробоват
           f << time[i] << "   ";
     }
     f << "  ";
-    observation_data.check_data(observation_data);
+    //observation_data.check_data(observation_data);
     j = observation_data.temperature_index(observation_data);
     f.seekp(j);
     f << "Temperature: ";
@@ -156,31 +165,38 @@ void Thermometer::observation_file(const Thermometer &observation) // Попробоват
           f << temperature[i] << "  ";
         else
           f << temperature[i] << "   ";
-    }
-    f << "    "; // сюда пробелы посчитать
+    } // сюда пробелы посчитать
     f.close();
     return;
   }
-  out << observation_data << "Time: " << setw(8);
+  out << observation_data << "Time:        ";
   for (int i = 0; i < 24; i++)
   {
     if (i == time[i])
-      if (time[i] >= 10)
-        out << time[i] << "  ";
-      else
-        out << time[i] << "   ";
+      if (time[i] >= 0)
+        if (time[i] >= 10)
+          out << time[i] << "   ";
+        else
+          out << time[i] << "    ";
   }
   out << "                                    ";
   out << endl << "Temperature: ";
   for (int i = 0; i < 24; i++)
   {
     if (i == time[i])
-      if (temperature[i] >= 10 || temperature[i] < 0)
-        out << temperature[i] << "  ";
+      if (temperature[i] >= 0)
+        if (temperature[i] >= 10)
+          out << temperature[i] << "  ";
+        else
+          out << temperature[i] << "   ";
       else
-        out << temperature[i] << "   ";
+        if (temperature[i] < 0)
+          if ((temperature[i] > -10))
+            out << temperature[i] << "  ";
+          else
+            out << temperature[i] << " ";
   }
-  out << "                                    ";
+  out << "                                     ";
   out << endl;
   out.close(); // закрывает файл для записи 
 }
@@ -222,6 +238,9 @@ int main()
       break;
     case 1:
     {
+      ofstream out("Thermometer.txt");
+      out << "";
+      out.close();
       cout << "Year, month, day:" << endl;
       cin >> check_data;
       cout << "Time: ";
@@ -280,23 +299,7 @@ int main()
     break;
     case 6: //ЗАМЕНА ТЕКСТА
     {
-      Data get_temperature;
-      int i, j;
-      cout << "Write time" << endl;
-      cin >> get_temperature;
-      if (get_temperature.check_data(get_temperature))
-      {
-        i = get_temperature.time_index(get_temperature);
-        j = get_temperature.temperature_index(get_temperature);
-        ofstream f("Thermometer.txt", ofstream::binary | ofstream::out | ofstream::in);
-        f.seekp(i);
-        f << "Time_NEW";
-        f.seekp(j);
-        f << "Temperature_NEW";
-        f.close();
-      }
-      else
-        cout << "False" << endl;
+     
     }
     break;
     case 7:
@@ -317,24 +320,6 @@ int main()
     }
   } while (index != 0);
 
-
-  // Data check; 
- //  cout << "Series, number time:" << endl;
-  // cin >> temp;
-  // for (int i = 0; i < temp; i++)
-  // {
-  //   cout << "Time: ";
-  //   cin >> _time[i];
-  //   cout << "Temperature: ";
-  //   cin >> _temperature[i];
-  // }
-  // cout << "Year, month, day:" << endl;
-  // cin >> check; 
-
-  // Thermometer a;
-  // a.series_observation(check, temp, _time, _temperature);
-  // a.get_observation();
- //  a.observation_file(a);
- //  a.print_observation();
+  //atoi;
   cout << endl << "END PROGRAMM";
 }
