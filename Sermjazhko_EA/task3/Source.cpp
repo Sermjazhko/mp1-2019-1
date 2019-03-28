@@ -4,24 +4,24 @@
 #include <clocale>
 #include "Date.h"
 using namespace std;
-class Thermometer //НАЧАЛЬНАЯ ДАТА НАБЛЮДЕНИЯ (!)
+class Thermometer
 {
   Date observation_date;
   int time[24];
   int temperature[24];
 public:
-  Thermometer(); //конструктор по умолчанию
-  Thermometer(Date observation, int _time, int _temperature); //конструктор инициализации
-  Thermometer(const Thermometer &observation); //конструктор копирования
-  Thermometer& operator=(const Thermometer &observation); // оператор присваивания
-  void series_observation(Date observation, int number, int *_time, int *_temperature); // задать наблюдение или серию 
-  void get_observation(); // вывести начальную дату
-  string Get_temperature(Date observation); //узнать температуру в выбранном наблюдении
-  double get_average_temperature(Date observation, int index_dat, int check_month); //узнать среднюю температуру в выбранном наблюдении
-  double get_av_temp_d_or_n(Date observation, int index, int check_month); //узнать среднюю дневную или ночную температуру в наблюдении
-  void observation_file(const Thermometer &observation); //сохранить историю наблюдений в файл
-  void print_observation(); //считать историю наблюдений из файла
-  ~Thermometer() //деструктор
+  Thermometer(); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+  Thermometer(Date observation, int _time, int _temperature); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+  Thermometer(const Thermometer &observation); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+  Thermometer& operator=(const Thermometer &observation); // РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
+  void series_observation(Date observation, int number, int *_time, int *_temperature); // Р·Р°РґР°С‚СЊ РЅР°Р±Р»СЋРґРµРЅРёРµ РёР»Рё СЃРµСЂРёСЋ 
+  void get_observation(); // РІС‹РІРµСЃС‚Рё РЅР°С‡Р°Р»СЊРЅСѓСЋ РґР°С‚Сѓ
+  string Get_temperature(Date observation); //СѓР·РЅР°С‚СЊ С‚РµРјРїРµСЂР°С‚СѓСЂСѓ РІ РІС‹Р±СЂР°РЅРЅРѕРј РЅР°Р±Р»СЋРґРµРЅРёРё
+  double get_average_temperature(Date observation, int index_dat, int check_month); //СѓР·РЅР°С‚СЊ СЃСЂРµРґРЅСЋСЋ С‚РµРјРїРµСЂР°С‚СѓСЂСѓ РІ РІС‹Р±СЂР°РЅРЅРѕРј РЅР°Р±Р»СЋРґРµРЅРёРё
+  double get_av_temp_d_or_n(Date observation, int index, int check_month); //СѓР·РЅР°С‚СЊ СЃСЂРµРґРЅСЋСЋ РґРЅРµРІРЅСѓСЋ РёР»Рё РЅРѕС‡РЅСѓСЋ С‚РµРјРїРµСЂР°С‚СѓСЂСѓ РІ РЅР°Р±Р»СЋРґРµРЅРёРё
+  void observation_file(const Thermometer &observation); //СЃРѕС…СЂР°РЅРёС‚СЊ РёСЃС‚РѕСЂРёСЋ РЅР°Р±Р»СЋРґРµРЅРёР№ РІ С„Р°Р№Р»
+  void print_observation(); //СЃС‡РёС‚Р°С‚СЊ РёСЃС‚РѕСЂРёСЋ РЅР°Р±Р»СЋРґРµРЅРёР№ РёР· С„Р°Р№Р»Р°
+  ~Thermometer() //РґРµСЃС‚СЂСѓРєС‚РѕСЂ
   {}
 };
 Thermometer::Thermometer()
@@ -78,7 +78,7 @@ void Thermometer::get_observation()
   while (index != 3)
   {
     fin.getline(ArrayWord, N);
-    cout << ArrayWord << endl; //Вывод строки
+    cout << ArrayWord << endl; //Р’С‹РІРѕРґ СЃС‚СЂРѕРєРё
     index++;
   }
   fin.close();
@@ -96,7 +96,7 @@ string Thermometer::Get_temperature(Date observation)
   {
     while (!fin.eof())
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
+      fin.getline(ArrayWord, N); //РџРѕСЃС‚СЂРѕС‡РЅРѕРµ СЃС‡РёС‚С‹РІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РјР°СЃСЃРёРІ
       size_array = strlen(ArrayWord);
       number += size_array + 2;
       if (number == observation.temperature_index(observation))
@@ -133,7 +133,7 @@ double Thermometer::get_average_temperature(Date observation, int index_date, in
     {
       while (!fin.eof())
       {
-        fin.getline(ArrayWord, N); //Построчное считывание информации в массив
+        fin.getline(ArrayWord, N); //РџРѕСЃС‚СЂРѕС‡РЅРѕРµ СЃС‡РёС‚С‹РІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РјР°СЃСЃРёРІ
         size_array = strlen(ArrayWord);
         number += size_array + 2;
         if (number == observation.temperature_index(observation))
@@ -156,7 +156,7 @@ double Thermometer::get_average_temperature(Date observation, int index_date, in
   {
     while (!fin.eof())
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
+      fin.getline(ArrayWord, N); //РџРѕСЃС‚СЂРѕС‡РЅРѕРµ СЃС‡РёС‚С‹РІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РјР°СЃСЃРёРІ
       size_array = strlen(ArrayWord);
       number += size_array + 2;
       if (ArrayWord[7] == '.' || ArrayWord[8] == '.')
@@ -189,7 +189,7 @@ double Thermometer::get_average_temperature(Date observation, int index_date, in
   {
     while (!fin.eof())
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
+      fin.getline(ArrayWord, N); //РџРѕСЃС‚СЂРѕС‡РЅРѕРµ СЃС‡РёС‚С‹РІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РјР°СЃСЃРёРІ
       size_array = strlen(ArrayWord);
       number += size_array + 2;
       fin.getline(ArrayWord, N);
@@ -220,11 +220,11 @@ double Thermometer::get_av_temp_d_or_n(Date observation, int index_, int check_m
   int size_array;
   ifstream fin("Thermometer.txt");
   char ArrayWord[N] = { "" };
-  if (index_ == 1) // дневное
+  if (index_ == 1) // РґРЅРµРІРЅРѕРµ
   {
     while (!fin.eof())
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
+      fin.getline(ArrayWord, N); //РџРѕСЃС‚СЂРѕС‡РЅРѕРµ СЃС‡РёС‚С‹РІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РјР°СЃСЃРёРІ
       size_array = strlen(ArrayWord);
       if (ArrayWord[7] == '.' || ArrayWord[8] == '.')
       {
@@ -275,11 +275,11 @@ double Thermometer::get_av_temp_d_or_n(Date observation, int index_, int check_m
       return 0;
     return D / (avarage_index_d - 1);
   }
-  if (index_ == 2) //ночное
+  if (index_ == 2) //РЅРѕС‡РЅРѕРµ
   {
     while (!fin.eof())
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
+      fin.getline(ArrayWord, N); //РџРѕСЃС‚СЂРѕС‡РЅРѕРµ СЃС‡РёС‚С‹РІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРё РІ РјР°СЃСЃРёРІ
       size_array = strlen(ArrayWord);
       if (ArrayWord[7] == '.' || ArrayWord[8] == '.')
       {
@@ -297,7 +297,7 @@ double Thermometer::get_av_temp_d_or_n(Date observation, int index_, int check_m
         {
           if (((O = atoi(ArrayWord + 13 + point)) < 6) && ((O = atoi(ArrayWord + 13 + point)) > 0))
             point_n++;
-          if (((O = atoi(ArrayWord + 13 + point)) > 21) && ((O = atoi(ArrayWord + 13 + point)) <24))
+          if (((O = atoi(ArrayWord + 13 + point)) > 21) && ((O = atoi(ArrayWord + 13 + point)) < 24))
             point_n++;
           if (ArrayWord[13 + point] == ' ')
             break;
@@ -327,13 +327,13 @@ double Thermometer::get_av_temp_d_or_n(Date observation, int index_, int check_m
 }
 void Thermometer::observation_file(const Thermometer &observation)
 {
-  ofstream out("Thermometer.txt", ios_base::app); // запись в конец файла 
+  ofstream out("Thermometer.txt", ios_base::app); // Р·Р°РїРёСЃСЊ РІ РєРѕРЅРµС† С„Р°Р№Р»Р° 
   int i, j;
   int index_space = 0;
   if (observation_date.check_date(observation_date))
   {
     i = observation_date.time_index(observation_date);
-    ofstream f("Thermometer.txt", ofstream::binary | ofstream::out | ofstream::in);
+    ofstream f("Thermometer.txt", ofstream::binary | ofstream::out | ofstream::in); // РґР»СЏ Р·Р°РјРµРЅС‹, РµСЃР»Рё РґР°С‚Р° СѓР¶Рµ РµСЃС‚СЊ
     f.seekp(i);
     f << "Time:        ";
     for (int i = 0; i < 24; i++)
@@ -431,7 +431,7 @@ void Thermometer::observation_file(const Thermometer &observation)
   for (int id = 0; id < (100 - index_space); id++)
     out << " ";
   out << endl;
-  out.close(); // закрывает файл для записи 
+  out.close(); // Р·Р°РєСЂС‹РІР°РµС‚ С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё 
 }
 void Thermometer::print_observation()
 {
@@ -442,7 +442,7 @@ void Thermometer::print_observation()
   while (!fin.eof())
   {
     fin.getline(ArrayWord, N);
-    cout << ArrayWord << endl; //Вывод строки
+    cout << ArrayWord << endl; //Р’С‹РІРѕРґ СЃС‚СЂРѕРєРё
   }
   fin.close();
 }
@@ -464,7 +464,7 @@ int main()
   char *array = { "" };
   do
   {
-    cout << "0 - Завершить работу" << endl << "1 - Уставить начальное наблюдение" << endl << "2 - Узнать начальное наблюдение" << endl << "3 - Задать наблюдение" << endl << "4 - Получить температуру в заданном наблюдении" << endl << "5 - Здать серию наблюдений" << endl << "6 - Получить среднюю температуру за день/месяц/всё время" << endl << "7 - Получить среднюю дневную или ночную температуру за месяц" << endl << "8 - Сохранить наблюдение" << endl << "9 - Считать историю ннаблюдений из файла" << endl;
+    cout << "0 - Р—Р°РІРµСЂС€РёС‚СЊ СЂР°Р±РѕС‚Сѓ" << endl << "1 - РЈСЃС‚Р°РІРёС‚СЊ РЅР°С‡Р°Р»СЊРЅРѕРµ РЅР°Р±Р»СЋРґРµРЅРёРµ" << endl << "2 - РЈР·РЅР°С‚СЊ РЅР°С‡Р°Р»СЊРЅРѕРµ РЅР°Р±Р»СЋРґРµРЅРёРµ" << endl << "3 - Р—Р°РґР°С‚СЊ РЅР°Р±Р»СЋРґРµРЅРёРµ" << endl << "4 - РџРѕР»СѓС‡РёС‚СЊ С‚РµРјРїРµСЂР°С‚СѓСЂСѓ РІ Р·Р°РґР°РЅРЅРѕРј РЅР°Р±Р»СЋРґРµРЅРёРё" << endl << "5 - Р—РґР°С‚СЊ СЃРµСЂРёСЋ РЅР°Р±Р»СЋРґРµРЅРёР№" << endl << "6 - РџРѕР»СѓС‡РёС‚СЊ СЃСЂРµРґРЅСЋСЋ С‚РµРјРїРµСЂР°С‚СѓСЂСѓ Р·Р° РґРµРЅСЊ/РјРµСЃСЏС†/РІСЃС‘ РІСЂРµРјСЏ" << endl << "7 - РџРѕР»СѓС‡РёС‚СЊ СЃСЂРµРґРЅСЋСЋ РґРЅРµРІРЅСѓСЋ РёР»Рё РЅРѕС‡РЅСѓСЋ С‚РµРјРїРµСЂР°С‚СѓСЂСѓ Р·Р° РјРµСЃСЏС†" << endl << "8 - РЎРѕС…СЂР°РЅРёС‚СЊ РЅР°Р±Р»СЋРґРµРЅРёРµ" << endl << "9 - РЎС‡РёС‚Р°С‚СЊ РёСЃС‚РѕСЂРёСЋ РЅРЅР°Р±Р»СЋРґРµРЅРёР№ РёР· С„Р°Р№Р»Р°" << endl;
     cin >> index;
     switch (index)
     {
@@ -475,11 +475,11 @@ int main()
       ofstream out("Thermometer.txt");
       out << "";
       out.close();
-      cout << "Год/месяц/день:" << endl;
+      cout << "Р“РѕРґ/РјРµСЃСЏС†/РґРµРЅСЊ:" << endl;
       cin >> check_date;
-      cout << "Время в часах: ";
+      cout << "Р’СЂРµРјСЏ РІ С‡Р°СЃР°С…: ";
       cin >> _time[0];
-      cout << "Температура: ";
+      cout << "РўРµРјРїРµСЂР°С‚СѓСЂР°: ";
       cin >> _temperature[0];
       check_thermometer.series_observation(check_date, 1, _time, _temperature);
       check_thermometer.observation_file(check_thermometer);
@@ -491,11 +491,11 @@ int main()
     case 3:
     {
       Thermometer check;
-      cout << "Год/месяц/день:" << endl;
+      cout << "Р“РѕРґ/РјРµСЃСЏС†/РґРµРЅСЊ:" << endl;
       cin >> check_date;
-      cout << "Время в часах: ";
+      cout << "Р’СЂРµРјСЏ РІ С‡Р°СЃР°С…: ";
       cin >> _time[0];
-      cout << "Температура: ";
+      cout << "РўРµРјРїРµСЂР°С‚СѓСЂР°: ";
       cin >> _temperature[0];
       check_date.check_date(check_date);
       check.series_observation(check_date, 1, _time, _temperature);
@@ -505,7 +505,7 @@ int main()
     case 4:
     {
       Date temperature;
-      cout << "Введите год, месяц, день наблюдения:" << endl;
+      cout << "Р’РІРµРґРёС‚Рµ РіРѕРґ, РјРµСЃСЏС†, РґРµРЅСЊ РЅР°Р±Р»СЋРґРµРЅРёСЏ:" << endl;
       cin >> temperature;
       Thermometer temperature_check;
       cout << temperature_check.Get_temperature(temperature) << endl;
@@ -515,15 +515,15 @@ int main()
     {
       Thermometer check1;
       delet_array(_time, _temperature);
-      cout << "Год/месяц/день:" << endl;
+      cout << "Р“РѕРґ/РјРµСЃСЏС†/РґРµРЅСЊ:" << endl;
       cin >> check_date;
-      cout << "Количество наблюдений, которые хотите задать:" << endl;
+      cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ РЅР°Р±Р»СЋРґРµРЅРёР№, РєРѕС‚РѕСЂС‹Рµ С…РѕС‚РёС‚Рµ Р·Р°РґР°С‚СЊ:" << endl;
       cin >> temp;
       for (int i = 0; i < temp; i++)
       {
-        cout << "Время в часах: ";
+        cout << "Р’СЂРµРјСЏ РІ С‡Р°СЃР°С…: ";
         cin >> _time[i];
-        cout << "Температура: ";
+        cout << "РўРµРјРїРµСЂР°С‚СѓСЂР°: ";
         cin >> _temperature[i];
       }
       check_date.check_date(check_date);
@@ -537,22 +537,22 @@ int main()
       int i = 0;
       int j = 0;
       Thermometer temperature_check;
-      cout << "0 - За день" << endl << "1 - За месяц" << endl << "2 - Всё время" << endl;
+      cout << "0 - Р—Р° РґРµРЅСЊ" << endl << "1 - Р—Р° РјРµСЃСЏС†" << endl << "2 - Р’СЃС‘ РІСЂРµРјСЏ" << endl;
       cin >> i;
       if (i == 0)
       {
-        cout << "Год/месяц/день:" << endl;
+        cout << "Р“РѕРґ/РјРµСЃСЏС†/РґРµРЅСЊ:" << endl;
         cin >> temperature;
-        cout << "Средняя температура за день: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
+        cout << "РЎСЂРµРґРЅСЏСЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° Р·Р° РґРµРЅСЊ: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
       }
       if (i == 1)
       {
-        cout << "Месяц:" << endl;
+        cout << "РњРµСЃСЏС†:" << endl;
         cin >> j;
-        cout << "Средняя температура за месяц: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
+        cout << "РЎСЂРµРґРЅСЏСЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° Р·Р° РјРµСЃСЏС†: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
       }
       if (i == 2)
-        cout << "Средняя температура за всё время: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
+        cout << "РЎСЂРµРґРЅСЏСЏ С‚РµРјРїРµСЂР°С‚СѓСЂР° Р·Р° РІСЃС‘ РІСЂРµРјСЏ: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
     }
     break;
     case 7:
@@ -561,11 +561,11 @@ int main()
       int i = 0;
       int j = 0;
       Thermometer temperature_check;
-      cout << "Месяц:" << endl;
+      cout << "РњРµСЃСЏС†:" << endl;
       cin >> j;
-      cout << "1 - Дневная" << endl <<  "2 - Ночная" << endl;
+      cout << "1 - Р”РЅРµРІРЅР°СЏ" << endl << "2 - РќРѕС‡РЅР°СЏ" << endl;
       cin >> i;
-      cout << "Средняя температура: " << temperature_check.get_av_temp_d_or_n(temperature, i, j) << endl;
+      cout << "РЎСЂРµРґРЅСЏСЏ С‚РµРјРїРµСЂР°С‚СѓСЂР°: " << temperature_check.get_av_temp_d_or_n(temperature, i, j) << endl;
     }
     break;
     case 8:
