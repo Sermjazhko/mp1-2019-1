@@ -9,15 +9,15 @@ class Date
   int index_time;
   int index_temperature;
 public:
-  Date(int _year, int _month, int _day); //конструктор инициализации
-  Date(const Date &object); //конструктор копирования
-  Date& operator=(const Date &object); // оператор присваивания
-  bool check_date(Date &object); //проверка на наличие даты
-  int time_index(const Date &object); // показывает, где курсор времени
-  int temperature_index(const Date &object); // показывает, где курсор температуры
-  friend ostream& operator<< (ostream &out, const Date &object); // вывод
-  friend istream& operator>> (std::istream &in, Date &object); // ввод
-  ~Date() // деструктор
+  Date(int _year, int _month, int _day); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+  Date(const Date &object); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+  Date& operator=(const Date &object); // РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
+  bool check_date(Date &object); //РїСЂРѕРІРµСЂРєР° РЅР° РЅР°Р»РёС‡РёРµ РґР°С‚С‹
+  int time_index(const Date &object); // РїРѕРєР°Р·С‹РІР°РµС‚, РіРґРµ РєСѓСЂСЃРѕСЂ РІСЂРµРјРµРЅРё
+  int temperature_index(const Date &object); // РїРѕРєР°Р·С‹РІР°РµС‚, РіРґРµ РєСѓСЂСЃРѕСЂ С‚РµРјРїРµСЂР°С‚СѓСЂС‹
+  friend ostream& operator<< (ostream &out, const Date &object); // РІС‹РІРѕРґ
+  friend istream& operator>> (std::istream &in, Date &object); // РІРІРѕРґ
+  ~Date() // РґРµСЃС‚СЂСѓРєС‚РѕСЂ
   {}
 };
 Date::Date(int _year = 2000, int _month = 1, int _day = 1)
@@ -47,7 +47,7 @@ Date& Date::operator=(const Date &object)
   index_temperature = object.index_temperature;
   return *this;
 }
-bool Date::check_date( Date &object)
+bool Date::check_date(Date &object)
 {
   int const N = 256;
   int index = 0;
@@ -73,25 +73,25 @@ bool Date::check_date( Date &object)
     index_string += size_array + 2;
     if (ArrayWord[6] == date[0])
     {
-        for (int j = 6, i = 0; j < size_array; j++, i++)
+      for (int j = 6, i = 0; j < size_array; j++, i++)
+      {
+        if (ArrayWord[j] == '.')
+          j++;
+        if (ArrayWord[j] == date[i])
         {
-          if (ArrayWord[j] == '.')
-            j++;
-          if (ArrayWord[j] == date[i])
+          index++;
+          if (index == (size_array - 8))
           {
-            index++;
-            if (index == (size_array - 8))
-            {
-              object.index_time = index_string;
-              fin.getline(ArrayWord, N);
-              object.index_temperature = index_string + strlen(ArrayWord) + 2;
-              fin.close();
-              return true;
-            }
+            object.index_time = index_string;
+            fin.getline(ArrayWord, N);
+            object.index_temperature = index_string + strlen(ArrayWord) + 2;
+            fin.close();
+            return true;
           }
-          else
-            index = 0;
         }
+        else
+          index = 0;
+      }
     }
   }
   index_string = 0;
