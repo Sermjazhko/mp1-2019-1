@@ -1,0 +1,11 @@
+Data: 1.1.2019
+Time:        3                                       
+
+Temperature: 3                                                                          
+Data: 5.4.2019
+Time:        1                                       
+Temperature: 2                                       
+Data: 3.3.2019
+Time:        2   3   4                                       
+
+Temperature: 1   -12  -5                                     
