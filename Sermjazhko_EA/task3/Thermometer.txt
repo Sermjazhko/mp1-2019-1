@@ -1,15 +1,15 @@
-Data: 1.1.2019
-Time:        2                                         
-Temperature: 2                                         
-Data: 2.1.2019
-Time:       10                                         
-Temperature: 2                                         
-Data: 2.2.2019
-Time:        3                                        
-Temperature: 4                                        
-Data: 3.3.2019
-Time:        4                                        
-Temperature: 4                                        
-Data: 4.3.2019
-Time:        1   3   10                                    
-Temperature: 12  0   -12                                  
+Date: 1.3.2019
+Time:        1                                                                                                    
+Temperature: 1                                                                                                    
+Date: 3.3.2019
+Time:        14                                                                                                    
+Temperature: -2                                                                                                    
+Date: 4.3.2019
+Time:        12                                                                                                    
+Temperature: 12                                                                                                    
+Date: 7.3.2019
+Time:        14                                                                                                    
+Temperature: -10                                                                                                   
+Date: 10.3.2019
+Time:        4   14                                                                                                 
+Temperature: 1   2                                                                                                 
