@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <clocale>
+#include <vector>
 #include "Date.h"
 using namespace std;
 class Thermometer
@@ -15,12 +16,12 @@ public:
   Thermometer(const Thermometer &observation); //конструктор копирования
   Thermometer& operator=(const Thermometer &observation); // оператор присваивания
   void series_observation(Date observation, int number, int *_time, int *_temperature); // задать наблюдение или серию 
-  void get_observation(); // вывести начальную дату
-  string Get_temperature(Date observation); //узнать температуру в выбранном наблюдении
-  double get_average_temperature(Date observation, int index_dat, int check_month); //узнать среднюю температуру в выбранном наблюдении
-  double get_av_temp_d_or_n(Date observation, int index, int check_month); //узнать среднюю дневную или ночную температуру в наблюдении
-  void observation_file(const Thermometer &observation); //сохранить историю наблюдений в файл
-  void print_observation(); //считать историю наблюдений из файла
+  void get_observation(vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp); // вывести начальную дату
+  void Get_temperature(Date observation, vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i); //узнать температуру в выбранном наблюдении
+  double get_average_temperature(Date observation, int index_dat, int check_month, vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i); //узнать среднюю температуру в выбранном наблюдении
+  double get_av_temp_d_or_n(Date observation, int index, int check_month, vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i); //узнать среднюю дневную или ночную температуру в наблюдении
+  void observation_file(vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i); //сохранить историю наблюдений в файл
+  void print_observation(vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i); //считать историю наблюдений из файла
   ~Thermometer() //деструктор
   {}
 };
@@ -68,372 +69,215 @@ void Thermometer::series_observation(Date observation, int number, int *_time, i
     temperature[_time[i]] = _temperature[i];
   }
 }
-void Thermometer::get_observation()
+void Thermometer::get_observation(vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp)
 {
-  int index = 0;
-  int const N = 256;
-  ifstream fin("Thermometer.txt");
-  char ArrayWord[N] = { "" };
-  cout << "Start data:" << endl;
-  while (index != 3)
-  {
-    fin.getline(ArrayWord, N);
-    cout << ArrayWord << endl; //Вывод строки
-    index++;
-  }
-  fin.close();
+  cout << "Дата:" << endl;
+  for (int i = date[0].size() - 1; i >= 0; i--)
+    cout << date[0].at(i) << ".";
+  cout << endl << "Время: " << time[0].at(0) << endl;
+  cout << "Темп.: " << temp[0].at(0) << endl;
 }
-string Thermometer::Get_temperature(Date observation)
+void Thermometer::Get_temperature(Date observation, vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i)
 {
-  int const N = 256;
-  int index = 0;
-  int number = 0;
-  string str = "False";
-  int size_array;
-  ifstream fin("Thermometer.txt");
-  char ArrayWord[N] = { "" };
-  if (observation.check_date(observation))
+  int check = 0;
+  for (int k = 0; k <= i; k++)
   {
-    while (!fin.eof())
+    if (date[k].at(0) == observation.get_year(observation))
+      if (date[k].at(1) == observation.get_month(observation))
+        if (date[k].at(2) == observation.get_day(observation))
+          check = 1;
+    if (check == 1)
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
-      size_array = strlen(ArrayWord);
-      number += size_array + 2;
-      if (number == observation.temperature_index(observation))
-      {
-        fin.getline(ArrayWord, N);
-        fin.close();
-        return ArrayWord;
-      }
+      cout << "Темп.: ";
+      for (int j = 0; j < temp[k].size(); j++)
+        cout << temp[k].at(j) << " ";
+      cout << endl;
+      return;
     }
   }
-  else
-  {
-    fin.close();
-    return str;
-  }
-  return str;
+  if (check == 0)
+    cout << "Дата не найдена";
 }
-double Thermometer::get_average_temperature(Date observation, int index_date, int check_month)
+double Thermometer::get_average_temperature(Date observation, int index_date, int check_month, vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i)
 {
-  int const N = 256;
-  int CHECK = 0;
-  int I = -1;
-  double L = 0;
-  int point = 0;
-  double avarage_index = 1;
-  int index = 0;
-  int number = 0;
-  int size_array;
-  ifstream fin("Thermometer.txt");
-  char ArrayWord[N] = { "" };
-  if (index_date == 0)
+  if (index_date == 0) //для даты
   {
-    if (observation.check_date(observation))
+    int check = 0;
+    double agg = 0;
+
+    for (int k = 0; k <= i; k++)
     {
-      while (!fin.eof())
+      if (date[k].at(0) == observation.get_year(observation))
+        if (date[k].at(1) == observation.get_month(observation))
+          if (date[k].at(2) == observation.get_day(observation))
+            check = 1;
+      if (check == 1)
       {
-        fin.getline(ArrayWord, N); //Построчное считывание информации в массив
-        size_array = strlen(ArrayWord);
-        number += size_array + 2;
-        if (number == observation.temperature_index(observation))
+        for (int j = 0; j < temp[k].size(); j++)
+          agg += temp[k].at(j);
+        return agg / (temp[k].size());
+      }
+    }
+    if (check == 0)
+      return -500;
+  }
+  if (index_date == 1) //для месяца
+  {
+    int check = 0;
+    double agg = 0;
+    int p = 0;
+    for (int k = 0; k <= i; k++)
+    {
+      if (date[k].at(1) == check_month)
+        check = 1;
+      if (check == 1)
+      {
+        for (int j = 0; j < temp[k].size(); j++)
         {
-          fin.getline(ArrayWord, N);
-          for (int l = 0; l <= size_array; l++)
-          {
-            L += atoi(ArrayWord + 13 + point);
-            avarage_index++;
-            if (ArrayWord[13 + point] == ' ')
-              return L / (avarage_index - 2);
-            point = point + 4;
-          }
+          agg += temp[k].at(j);
+          p++;
         }
+        check = 0;
       }
     }
-    return 0;
+    if (p == 0)
+      return -200;
+    return agg / p;
   }
-  if (index_date == 1)
+  if (index_date == 2) //для всего времени
   {
-    while (!fin.eof())
+    int check = 0;
+    double agg = 0;
+    int p = 0;
+    for (int k = 0; k <= i; k++)
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
-      size_array = strlen(ArrayWord);
-      number += size_array + 2;
-      if (ArrayWord[7] == '.' || ArrayWord[8] == '.')
+      for (int j = 0; j < temp[k].size(); j++)
       {
-        if (ArrayWord[7] == '.')
-          I = atoi(ArrayWord + 8);
-        if (ArrayWord[8] == '.')
-          I = atoi(ArrayWord + 9);
+        agg += temp[k].at(j);
+        p++;
       }
-      else
-        I = 0;
-      if (I == check_month)
-      {
-        fin.getline(ArrayWord, N);
-        fin.getline(ArrayWord, N);
-        for (int l = 0; l <= size_array; l++)
-        {
-          L += atoi(ArrayWord + 13 + point);
-          if (ArrayWord[13 + point] == ' ')
-            break;
-          point = point + 4;
-          avarage_index++;
-        }
-      }
-      point = 0;
+      check = 0;
     }
-    return L / (avarage_index - 1);
+    if (p == 0)
+      return -200;
+    return agg / p;
   }
-  if (index_date == 2)
-  {
-    while (!fin.eof())
-    {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
-      size_array = strlen(ArrayWord);
-      number += size_array + 2;
-      fin.getline(ArrayWord, N);
-      fin.getline(ArrayWord, N);
-      for (int l = 0; l <= size_array; l++)
-      {
-        CHECK = atoi(ArrayWord + 13 + point);
-        L += atoi(ArrayWord + 13 + point);
-        if (ArrayWord[13 + point] == ' ')
-          break;
-        point = point + 4;
-        avarage_index++;
-      }
-      point = 0;
-    }
-    return (L - CHECK) / (avarage_index - 2);
-  }
-  return NULL;
 }
-double Thermometer::get_av_temp_d_or_n(Date observation, int index_, int check_month)
+double Thermometer::get_av_temp_d_or_n(Date observation, int index_, int check_month, vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i)
 {
-  int const N = 256;
-  int I = -1;
-  double D = 0, Noth = 0, O = 0;
-  int point_d = 0, point_n = 0;
-  int point = 0;
-  double avarage_index_d = 1, avarage_index_n = 1;
-  int size_array;
-  ifstream fin("Thermometer.txt");
-  char ArrayWord[N] = { "" };
-  if (index_ == 1) // дневное
+  if (index_ == 1) //дневное
   {
-    while (!fin.eof())
+    int check = 0;
+    double agg = 0;
+    int p = 0;
+    for (int k = 0; k <= i; k++)
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
-      size_array = strlen(ArrayWord);
-      if (ArrayWord[7] == '.' || ArrayWord[8] == '.')
+      if (date[k].at(1) == check_month)
+        check = 1;
+      if (check == 1)
       {
-        if (ArrayWord[7] == '.')
-          I = atoi(ArrayWord + 8);
-        if (ArrayWord[8] == '.')
-          I = atoi(ArrayWord + 9);
-      }
-      else
-        I = 0;
-      if (I == check_month)
-      {
-        fin.getline(ArrayWord, N);
-        for (int l = 0; l <= size_array; l++)
-        {
-          if (((O = atoi(ArrayWord + 13 + point)) >= 6) && ((O = atoi(ArrayWord + 13 + point)) <= 21))
-            point_d++;
-          if (((O = atoi(ArrayWord + 13 + point)) < 6) && ((O = atoi(ArrayWord + 13 + point)) > 21))
-            point_n++;
-          if (ArrayWord[13 + point] == ' ')
-            break;
-          point = point + 4;
-        }
-        point = 0;
-        fin.getline(ArrayWord, N);
-        for (int l = 0; l <= size_array; l++)
-        {
-          while (point_d != 0)
+        for (int j = 0; j < temp[k].size(); j++)
+          if ((time[k].at(j) >= 6) && (time[k].at(j) <= 17))
           {
-            D += atoi(ArrayWord + 13 + point);
-            point_d--;
-            avarage_index_d++;
-            point = point + 4;
+            agg += temp[k].at(j);
+            p++;
           }
-          while (point_n != 0)
-          {
-            point = 0;
-            Noth += atoi(ArrayWord + 13 + point);
-            point_d--;
-            avarage_index_n++;
-            point = point + 4;
-          }
-        }
+        check = 0;
       }
-      point = 0;
     }
-    if (avarage_index_d == 1)
-      return 0;
-    return D / (avarage_index_d - 1);
+    if (p == 0)
+      return -200;
+    return agg / p;
   }
   if (index_ == 2) //ночное
   {
-    while (!fin.eof())
+    int check = 0;
+    double agg = 0;
+    int p = 0;
+    for (int k = 0; k <= i; k++)
     {
-      fin.getline(ArrayWord, N); //Построчное считывание информации в массив
-      size_array = strlen(ArrayWord);
-      if (ArrayWord[7] == '.' || ArrayWord[8] == '.')
+      if (date[k].at(1) == check_month)
+        check = 1;
+      if (check == 1)
       {
-        if (ArrayWord[7] == '.')
-          I = atoi(ArrayWord + 8);
-        if (ArrayWord[8] == '.')
-          I = atoi(ArrayWord + 9);
-      }
-      else
-        I = 0;
-      if (I == check_month)
-      {
-        fin.getline(ArrayWord, N);
-        for (int l = 0; l <= size_array; l++)
+        for (int j = 0; j < temp[k].size(); j++)
         {
-          if (((O = atoi(ArrayWord + 13 + point)) < 6) && ((O = atoi(ArrayWord + 13 + point)) > 0))
-            point_n++;
-          if (((O = atoi(ArrayWord + 13 + point)) > 21) && ((O = atoi(ArrayWord + 13 + point)) < 24))
-            point_n++;
-          if (ArrayWord[13 + point] == ' ')
-            break;
-          point = point + 4;
-        }
-        point = 0;
-        fin.getline(ArrayWord, N);
-        for (int l = 0; l <= size_array; l++)
-        {
-          while (point_n != 0)
+          if ((time[k].at(j) < 6) || ((time[k].at(j) > 17)))
           {
-            point = 0;
-            Noth += atoi(ArrayWord + 13 + point);
-            point_n--;
-            avarage_index_n++;
-            point = point + 4;
+            agg += temp[k].at(j);
+            p++;
           }
         }
+        check = 0;
       }
-      point = 0;
     }
-    if (avarage_index_n == 1)
-      return 0;
-    return Noth / (avarage_index_n - 1);
+    if (p == 0)
+      return -200;
+    return agg / p;
   }
-  return NULL;
 }
-void Thermometer::observation_file(const Thermometer &observation)
+void Thermometer::observation_file(vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i)
 {
   ofstream out("Thermometer.txt", ios_base::app); // запись в конец файла 
-  int i, j;
   int index_space = 0;
-  if (observation_date.check_date(observation_date))
+  for (int q = 0; q <= i; q++)
   {
-    i = observation_date.time_index(observation_date);
-    ofstream f("Thermometer.txt", ofstream::binary | ofstream::out | ofstream::in); // для замены, если дата уже есть
-    f.seekp(i);
-    f << "Time:        ";
-    for (int i = 0; i < 24; i++)
+    out << "Date: ";
+    for (int r = 2; r >= 0; r--)
+      out << date[q][r] << ".";
+    out << endl;
+    out << "Time:        ";
+    for (int l = 0; l < time[q].size(); l++)
     {
-      if (i == time[i])
-        if (time[i] >= 10)
+      if (time[q][l] >= 0)
+        if (time[q][l] >= 10)
         {
-          f << time[i] << "  ";
+          out << time[q][l] << "  ";
           index_space = index_space + 2;
         }
         else
         {
-          f << time[i] << "   ";
+          out << time[q][l] << "   ";
           index_space = index_space + 3;
         }
     }
-    for (int id = 0; id < (96 - index_space); id++)
-      f << " ";
-    j = observation_date.temperature_index(observation_date);
-    f.seekp(j);
+    for (int id = 0; id < (100 - index_space); id++)
+      out << " ";
     index_space = 0;
-    f << "Temperature: ";
-    for (int i = 0; i < 24; i++)
+    out << endl << "Temperature: ";
+    for (int o = 0; o < temp[q].size(); o++)
     {
-      if (i == time[i])
-        if (temperature[i] >= 10 || temperature[i] < 0)
+      if (temp[q][o] >= 0)
+        if (temp[q][o] >= 10)
         {
-          if (temperature[i] < -9)
-          {
-            f << temperature[i] << " ";
-            index_space++;
-          }
-          f << temperature[i] << "  ";
+          out << temp[q][o] << "  ";
           index_space = index_space + 2;
         }
         else
         {
-          f << temperature[i] << "   ";
-          index_space = index_space + 3;
-        }
-    }
-    for (int id = 0; id < (96 - index_space); id++)
-      f << " ";
-    f.close();
-    return;
-  }
-  index_space = 0;
-  out << observation_date << "Time:        ";
-  for (int i = 0; i < 24; i++)
-  {
-    if (i == time[i])
-      if (time[i] >= 0)
-        if (time[i] >= 10)
-        {
-          out << time[i] << "  ";
-          index_space = index_space + 2;
-        }
-        else
-        {
-          out << time[i] << "   ";
-          index_space = index_space + 3;
-        }
-  }
-  for (int id = 0; id < (100 - index_space); id++)
-    out << " ";
-  index_space = 0;
-  out << endl << "Temperature: ";
-  for (int i = 0; i < 24; i++)
-  {
-    if (i == time[i])
-      if (temperature[i] >= 0)
-        if (temperature[i] >= 10)
-        {
-          out << temperature[i] << "  ";
-          index_space = index_space + 2;
-        }
-        else
-        {
-          out << temperature[i] << "   ";
+          out << temp[q][o] << "   ";
           index_space = index_space + 3;
         }
       else
-        if (temperature[i] < 0)
-          if ((temperature[i] > -10))
+        if (temp[q][o] < 0)
+          if ((temp[q][o] > -10))
           {
-            out << temperature[i] << "  ";
+            out << temp[q][o] << "  ";
             index_space = index_space + 2;
           }
           else
           {
-            out << temperature[i] << " ";
+            out << temp[q][o] << " ";
             index_space = index_space + 2;
           }
+    }
+    for (int id = 0; id < (100 - index_space); id++)
+      out << " ";
+    out << endl;
   }
-  for (int id = 0; id < (100 - index_space); id++)
-    out << " ";
-  out << endl;
   out.close(); // закрывает файл для записи 
 }
-void Thermometer::print_observation()
+void Thermometer::print_observation(vector <vector <int>> date, vector <vector <int>> time, vector <vector <int>> temp, int i)
 {
   int const N = 256;
   ifstream fin("Thermometer.txt");
@@ -459,12 +303,17 @@ int main()
   int temp;
   int _time[24], _temperature[24];
   int index;
+  int i = 1;
+  vector <vector <int>> date_v = { {1, 1, 1}, {}, {}, {}, {}, {}, {}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{} };
+  vector <vector <int>> time_v = { {}, {}, {}, {}, {}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {} };
+  vector <vector <int>> temperature_v = { {}, {}, {}, {}, {}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {} };
   Date check_date;
   Thermometer check_thermometer;
+
   char *array = { "" };
   do
   {
-    cout << "0 - Завершить работу" << endl << "1 - Уставить начальное наблюдение" << endl << "2 - Узнать начальное наблюдение" << endl << "3 - Задать наблюдение" << endl << "4 - Получить температуру в заданном наблюдении" << endl << "5 - Здать серию наблюдений" << endl << "6 - Получить среднюю температуру за день/месяц/всё время" << endl << "7 - Получить среднюю дневную или ночную температуру за месяц" << endl << "8 - Сохранить наблюдение" << endl << "9 - Считать историю ннаблюдений из файла" << endl;
+    cout << "0 - Завершить работу" << endl << "1 - Уставить начальное наблюдение" << endl << "2 - Узнать начальное наблюдение" << endl << "3 - Задать наблюдение" << endl << "4 - Получить температуру в заданном наблюдении" << endl << "5 - Здать серию наблюдений" << endl << "6 - Получить среднюю температуру за день/месяц/всё время" << endl << "7 - Получить среднюю дневную или ночную температуру за месяц" << endl << "8 - Сохранить наблюдение" << endl << "9 - Считать историю наблюдений из файла" << endl;
     cin >> index;
     switch (index)
     {
@@ -477,29 +326,75 @@ int main()
       out.close();
       cout << "Год/месяц/день:" << endl;
       cin >> check_date;
+      date_v = { {}, {}, {}, {}, {}, {}, {}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{}, {},{} };
+      date_v[0].emplace_back(check_date.get_year(check_date));
+      date_v[0].emplace_back(check_date.get_month(check_date));
+      date_v[0].emplace_back(check_date.get_day(check_date));
       cout << "Время в часах: ";
       cin >> _time[0];
+      time_v[0].emplace_back(_time[0]);
       cout << "Температура: ";
       cin >> _temperature[0];
+      temperature_v[0].emplace_back(_temperature[0]);
       check_thermometer.series_observation(check_date, 1, _time, _temperature);
-      check_thermometer.observation_file(check_thermometer);
     }
     break;
     case 2:
-      check_thermometer.get_observation();
+      check_thermometer.get_observation(date_v, time_v, temperature_v);
       break;
     case 3:
     {
       Thermometer check;
+      int point = 0;
+      int time_check = -1;
       cout << "Год/месяц/день:" << endl;
       cin >> check_date;
-      cout << "Время в часах: ";
-      cin >> _time[0];
-      cout << "Температура: ";
-      cin >> _temperature[0];
-      check_date.check_date(check_date);
-      check.series_observation(check_date, 1, _time, _temperature);
-      check_thermometer = check;
+      for (int k = 0; k < i; k++)
+      {
+        if (date_v[k].at(0) == check_date.get_year(check_date))
+          if (date_v[k].at(1) == check_date.get_month(check_date))
+            if (date_v[k].at(2) == check_date.get_day(check_date))
+            {
+              point = 1;
+              cout << "Время в часах: ";
+              cin >> _time[0];
+              for (int s = 0; s < time_v[k].size(); s++)
+              {
+                if (time_v[k][s] == _time[0])
+                {
+                  time_check = s;
+                  break;
+                }
+              }
+              if (time_check == -1)
+                time_v[k].emplace_back(_time[0]);
+
+              cout << "Температура: ";
+              cin >> _temperature[0];
+              if (time_check == -1)
+                temperature_v[k].emplace_back(_temperature[0]);
+              if (time_check != -1)
+                temperature_v[k][time_check] = _temperature[0];
+              check.series_observation(check_date, 1, _time, _temperature);
+              check_thermometer = check;
+              k = i + 1;
+            }
+      }
+      if (point == 0)
+      {
+        date_v[i].emplace_back(check_date.get_year(check_date));
+        date_v[i].emplace_back(check_date.get_month(check_date));
+        date_v[i].emplace_back(check_date.get_day(check_date));
+        cout << "Время в часах: ";
+        cin >> _time[0];
+        time_v[i].emplace_back(_time[0]);
+        cout << "Температура: ";
+        cin >> _temperature[0];
+        temperature_v[i].emplace_back(_temperature[0]);
+        check.series_observation(check_date, 1, _time, _temperature);
+        check_thermometer = check;
+        i++;
+      }
     }
     break;
     case 4:
@@ -508,72 +403,138 @@ int main()
       cout << "Введите год, месяц, день наблюдения:" << endl;
       cin >> temperature;
       Thermometer temperature_check;
-      cout << temperature_check.Get_temperature(temperature) << endl;
+      temperature_check.Get_temperature(temperature, date_v, time_v, temperature_v, i - 1);
     }
     break;
     case 5:
     {
       Thermometer check1;
+      int check = 0;
+      int point = 0;
+      int l;
+      int time_check = -1;
       delet_array(_time, _temperature);
       cout << "Год/месяц/день:" << endl;
       cin >> check_date;
-      cout << "Количество наблюдений, которые хотите задать:" << endl;
-      cin >> temp;
-      for (int i = 0; i < temp; i++)
+      for (int k = 0; k < i; k++)
       {
-        cout << "Время в часах: ";
-        cin >> _time[i];
-        cout << "Температура: ";
-        cin >> _temperature[i];
+        if (date_v[k].at(0) == check_date.get_year(check_date))
+          if (date_v[k].at(1) == check_date.get_month(check_date))
+            if (date_v[k].at(2) == check_date.get_day(check_date))
+            {
+              cout << "Количество наблюдений, которые хотите задать:" << endl;
+              cin >> temp;
+              for (int t = 0; t < temp; t++)
+              {
+
+                time_check = -1;
+                point = 1;
+                cout << "Время в часах: ";
+                cin >> _time[t];
+                for (int s = 0; s < time_v[k].size(); s++)
+                {
+                  if (time_v[k][s] == _time[t])
+                  {
+                    time_check = s;
+                    break;
+                  }
+                }
+                if (time_check == -1)
+                  time_v[k].emplace_back(_time[t]);
+
+                cout << "Температура: ";
+                cin >> _temperature[t];
+                if (time_check == -1)
+                  temperature_v[k].emplace_back(_temperature[t]);
+                if (time_check != -1)
+                {
+                  temperature_v[k][time_check] = _temperature[t];
+                }
+              }
+              check1.series_observation(check_date, temp, _time, _temperature);
+              check_thermometer = check1;
+              k = i + 1;
+            }
       }
-      check_date.check_date(check_date);
-      check1.series_observation(check_date, temp, _time, _temperature);
-      check_thermometer = check1;
+      if (point == 0)
+      {
+        date_v[i].emplace_back(check_date.get_year(check_date));
+        date_v[i].emplace_back(check_date.get_month(check_date));
+        date_v[i].emplace_back(check_date.get_day(check_date));
+        cout << "Количество наблюдений, которые хотите задать:" << endl;
+        cin >> temp;
+        for (int k = 0; k < temp; k++)
+        {
+          cout << "Время в часах: ";
+          cin >> _time[k];
+          time_v[i].emplace_back(_time[k]);
+          for (l = 0; l < k; l++)
+          {
+            if (_time[l] == _time[k])
+            {
+              check = 1;
+              time_v[i].pop_back();
+              break;
+            }
+          }
+          cout << "Температура: ";
+          cin >> _temperature[k];
+          temperature_v[i].emplace_back(_temperature[k]);
+          if (check == 1)
+          {
+            temperature_v[i][l] = _temperature[k];
+            temperature_v[i].pop_back();
+          }
+        }
+        check1.series_observation(check_date, temp, _time, _temperature);
+        check_thermometer = check1;
+        i++;
+      }
     }
     break;
     case 6:
     {
       Date temperature;
-      int i = 0;
+      int s = 0;
       int j = 0;
       Thermometer temperature_check;
       cout << "0 - За день" << endl << "1 - За месяц" << endl << "2 - Всё время" << endl;
-      cin >> i;
-      if (i == 0)
+      cin >> s;
+      if (s == 0)
       {
         cout << "Год/месяц/день:" << endl;
         cin >> temperature;
-        cout << "Средняя температура за день: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
+        cout << "Средняя температура за день: " << temperature_check.get_average_temperature(temperature, s, j, date_v, time_v, temperature_v, i - 1) << endl;
       }
-      if (i == 1)
+      if (s == 1)
       {
         cout << "Месяц:" << endl;
         cin >> j;
-        cout << "Средняя температура за месяц: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
+        cout << "Средняя температура за месяц: " << temperature_check.get_average_temperature(temperature, s, j, date_v, time_v, temperature_v, i - 1) << endl;
       }
-      if (i == 2)
-        cout << "Средняя температура за всё время: " << temperature_check.get_average_temperature(temperature, i, j) << endl;
+      if (s == 2)
+        cout << "Средняя температура за всё время: " << temperature_check.get_average_temperature(temperature, s, j, date_v, time_v, temperature_v, i - 1) << endl;
     }
     break;
     case 7:
     {
       Date temperature;
-      int i = 0;
+      int t = 0;
       int j = 0;
       Thermometer temperature_check;
       cout << "Месяц:" << endl;
       cin >> j;
       cout << "1 - Дневная" << endl << "2 - Ночная" << endl;
-      cin >> i;
-      cout << "Средняя температура: " << temperature_check.get_av_temp_d_or_n(temperature, i, j) << endl;
+      cin >> t;
+      cout << "Средняя температура: " << temperature_check.get_av_temp_d_or_n(temperature, t, j, date_v, time_v, temperature_v, i - 1) << endl;
     }
     break;
     case 8:
-      check_thermometer.observation_file(check_thermometer);
+      check_thermometer.observation_file(date_v, time_v, temperature_v, i - 1);
       array = "";
       break;
     case 9:
-      check_thermometer.print_observation();
+      check_thermometer.print_observation(date_v, time_v, temperature_v, i - 1);
       break;
     default:
       cout << "Error!" << endl;
