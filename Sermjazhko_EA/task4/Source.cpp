@@ -10,7 +10,7 @@ int main()
   int point = -1;
   do
   {
-    cout << "Âûõîä - 0" << endl << "Ðåãèñòðàöèÿ êëèåíòà - 1" << endl << "Àâòîðèçàöèÿ - 2" << endl;
+    cout << "Ð’Ñ‹Ñ…Ð¾Ð´ - 0" << endl << "Ð ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ñ ÐºÐ»Ð¸ÐµÐ½Ñ‚Ð° - 1" << endl << "ÐÐ²Ñ‚Ð¾Ñ€Ð¸Ð·Ð°Ñ†Ð¸Ñ - 2" << endl;
     cin >> point;
     if (point == 1)
     {
@@ -26,24 +26,24 @@ int main()
       int time_check = 0;
       int time = 0;
       string password;
-      cout << "Ââåäèòå íîìåð ñ÷åòà:" << endl;
+      cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ ÑÑ‡ÐµÑ‚Ð°:" << endl;
       cin >> number;
-      cout << "Ââåäèòå ïàðîëü:" << endl;
+      cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ:" << endl;
       cin >> password;
       check1 = { number };
       while (!check1.authorization(number, password))
       {
-        cout << "Íåâåðíî ââåäåíû äàííûå:" << endl;
-        cout << "Ââåäèòå íîìåð ñ÷åòà:" << endl;
+        cout << "ÐÐµÐ²ÐµÑ€Ð½Ð¾ Ð²Ð²ÐµÐ´ÐµÐ½Ñ‹ Ð´Ð°Ð½Ð½Ñ‹Ðµ:" << endl;
+        cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð½Ð¾Ð¼ÐµÑ€ ÑÑ‡ÐµÑ‚Ð°:" << endl;
         cin >> number;
-        cout << "Ââåäèòå ïàðîëü:" << endl;
+        cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ:" << endl;
         cin >> password;
         check1 = { number };
       }
-      cout << "Êëèåíò: " << password << endl;
+      cout << "ÐšÐ»Ð¸ÐµÐ½Ñ‚: " << password << endl;
       do
       {
-        cout << "0 - Âûõîä" << endl << "1 - Äîñòóïíûå äåïîçèòû" << endl << "2 - Ïðîâåðèòü íà íàëè÷èå îòêðûòîãî äåïîçèòà" << endl << "3 - Îòêðûòü äåïîçèò" << endl << "4 - Ïîêàçàòü ñîñòîÿíèå äåïîçèòà" << endl << "5 - Ñíÿòü ïðîöåíòû" << endl << "6 - Çàêðûòü äåïîçèò" << endl << "7 - Ïåðåìîòàòü âðåìÿ" << endl;
+        cout << "0 - Ð’Ñ‹Ñ…Ð¾Ð´" << endl << "1 - Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ðµ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ñ‹" << endl << "2 - ÐŸÑ€Ð¾Ð²ÐµÑ€Ð¸Ñ‚ÑŒ Ð½Ð° Ð½Ð°Ð»Ð¸Ñ‡Ð¸Ðµ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¾Ð³Ð¾ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð°" << endl << "3 - ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚" << endl << "4 - ÐŸÐ¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ ÑÐ¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð°" << endl << "5 - Ð¡Ð½ÑÑ‚ÑŒ Ð¿Ñ€Ð¾Ñ†ÐµÐ½Ñ‚Ñ‹" << endl << "6 - Ð—Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚" << endl << "7 - ÐŸÐµÑ€ÐµÐ¼Ð¾Ñ‚Ð°Ñ‚ÑŒ Ð²Ñ€ÐµÐ¼Ñ" << endl;
         cin >> check_point;
         switch (check_point)
         {
@@ -59,30 +59,30 @@ int main()
           if (check1.check_open())
           {
             ProcessingCenter check;
-            cout << "Îòêðûò äåïîçèò íà: " << check.get_deposit(number) << " ìåñÿöåâ, âíåñåíî ñðåäñòâ - " << check.get_deposit_status(number) << endl;
+            cout << "ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚ Ð½Ð°: " << check.get_deposit(number) << " Ð¼ÐµÑÑÑ†ÐµÐ², Ð²Ð½ÐµÑÐµÐ½Ð¾ ÑÑ€ÐµÐ´ÑÑ‚Ð² - " << check.get_deposit_status(number) << endl;
           }
           else
-            cout << "Îòêðûòîãî äåïîçèòà íåò." << endl;
+            cout << "ÐžÑ‚ÐºÑ€Ñ‹Ñ‚Ð¾Ð³Ð¾ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð° Ð½ÐµÑ‚." << endl;
         }
         break;
         case 3:
         {
           int salary;
-          cout << "Ââåäèòå êîëè÷åñòâî ìåñÿöåâ, íà êîòîðîå õîòèòå âçÿòü äåïîçèò (1 ãîä - 12 ìåñÿöåâ, 2 ãîäà - 24, 3 ãîäà - 36)" << endl;
+          cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¼ÐµÑÑÑ†ÐµÐ², Ð½Ð° ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ðµ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð²Ð·ÑÑ‚ÑŒ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚ (1 Ð³Ð¾Ð´ - 12 Ð¼ÐµÑÑÑ†ÐµÐ², 2 Ð³Ð¾Ð´Ð° - 24, 3 Ð³Ð¾Ð´Ð° - 36)" << endl;
           cin >> month_deposit;
           while ((month_deposit != 3) && (month_deposit != 6) && (month_deposit != 12) && (month_deposit != 24) && (month_deposit != 36))
           {
-            cout << "Íåâåðíî ââåäåíû äàííûå" << endl;
+            cout << "ÐÐµÐ²ÐµÑ€Ð½Ð¾ Ð²Ð²ÐµÐ´ÐµÐ½Ñ‹ Ð´Ð°Ð½Ð½Ñ‹Ðµ" << endl;
             cin >> month_deposit;
           }
-          cout << "Ñêîëüêî ñðåäñòâ ïåðåâåñòè?" << endl;
+          cout << "Ð¡ÐºÐ¾Ð»ÑŒÐºÐ¾ ÑÑ€ÐµÐ´ÑÑ‚Ð² Ð¿ÐµÑ€ÐµÐ²ÐµÑÑ‚Ð¸?" << endl;
           cin >> salary;
           check1.open_deposit(month_deposit, salary);
         }
         break;
         case 4:
         {
-          cout << "Ñîñòîÿíèå äåïîçèòà: " << check1.deposit_() << endl;
+          cout << "Ð¡Ð¾ÑÑ‚Ð¾ÑÐ½Ð¸Ðµ Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð°: " << check1.deposit_() << endl;
         }
         break;
         case 5:
@@ -96,19 +96,19 @@ int main()
           if (time_check >= check.get_deposit(number))
             check1.close_deposit();
           else
-            cout << "Äåïîçèò ìîæíî çàêðûòü òîëüêî ïî èñòå÷åíèè ñðîêà!" << endl;
+            cout << "Ð”ÐµÐ¿Ð¾Ð·Ð¸Ñ‚ Ð¼Ð¾Ð¶Ð½Ð¾ Ð·Ð°ÐºÑ€Ñ‹Ñ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð¿Ð¾ Ð¸ÑÑ‚ÐµÑ‡ÐµÐ½Ð¸Ð¸ ÑÑ€Ð¾ÐºÐ°!" << endl;
         }
         break;
         case 7:
         {
           int index = time_check;
-          cout << "Ñêîëüêî ìåñÿöåâ ïðîøëî?" << endl;
+          cout << "Ð¡ÐºÐ¾Ð»ÑŒÐºÐ¾ Ð¼ÐµÑÑÑ†ÐµÐ² Ð¿Ñ€Ð¾ÑˆÐ»Ð¾?" << endl;
           cin >> time;
           time_check += time;
           if (time_check > month_deposit)
           {
             time = month_deposit - index;
-            cout << "Ñðîê äåïîçèòà ïîäîøåë ê êîíöó!" << endl;
+            cout << "Ð¡Ñ€Ð¾Ðº Ð´ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð° Ð¿Ð¾Ð´Ð¾ÑˆÐµÐ» Ðº ÐºÐ¾Ð½Ñ†Ñƒ!" << endl;
             if (time < 0)
               time = 0;
           }
