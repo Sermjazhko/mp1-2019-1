@@ -1,4 +1,4 @@
-#include <iostream>
+include <iostream>
 #include <vector>
 #include <string>
 using namespace std;
@@ -10,25 +10,25 @@ class ProcessingCenter
   int deposit_status;
   string password;
 public:
-  static vector <string> full_name_;//база данных клиентов
+  static vector <string> full_name_;//Р±Р°Р·Р° РґР°РЅРЅС‹С… РєР»РёРµРЅС‚РѕРІ
   static vector <int> salary_;
-  static vector <int> deposit_; // время
-  static vector <int> deposit_status_; //сумма
+  static vector <int> deposit_; // РІСЂРµРјСЏ
+  static vector <int> deposit_status_; //СЃСѓРјРјР°
   static vector <int> deposit_status_end;
   static vector <string> password_;
-  ProcessingCenter(); //конструктор по умолчанию
-  ProcessingCenter(string _name, int _salary, int _deposit, int _deposit_status, string _password); //конструктор инициализации
-  ProcessingCenter(const ProcessingCenter &object); //конструктор копирования
-  bool authorization_check(int number, string &_password); //проверка авторизации
-  int get_salary(int number);// получить информацию о счете
-  int get_deposit(int number);// получить информацию о депозите
-  void operations(int amount, int number, int time);//изменение депозита/счета
-  void set_deposit_status(int time, int number);// состояние депозита через некоторое время
-  int get_deposit_status(int number); // состояние депозита
-  int get_deposit_status_end(int number); // состояние депозита
-  void withdraw_interest(int number);// снять проценты
-  void close(int number);//перевести всё на зарплатный счет
-  ~ProcessingCenter() //деструктор
+  ProcessingCenter(); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+  ProcessingCenter(string _name, int _salary, int _deposit, int _deposit_status, string _password); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
+  ProcessingCenter(const ProcessingCenter &object); //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+  bool authorization_check(int number, string &_password); //РїСЂРѕРІРµСЂРєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё
+  int get_salary(int number);// РїРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃС‡РµС‚Рµ
+  int get_deposit(int number);// РїРѕР»СѓС‡РёС‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РґРµРїРѕР·РёС‚Рµ
+  void operations(int amount, int number, int time);//РёР·РјРµРЅРµРЅРёРµ РґРµРїРѕР·РёС‚Р°/СЃС‡РµС‚Р°
+  void set_deposit_status(int time, int number);// СЃРѕСЃС‚РѕСЏРЅРёРµ РґРµРїРѕР·РёС‚Р° С‡РµСЂРµР· РЅРµРєРѕС‚РѕСЂРѕРµ РІСЂРµРјСЏ
+  int get_deposit_status(int number); // СЃРѕСЃС‚РѕСЏРЅРёРµ РґРµРїРѕР·РёС‚Р°
+  int get_deposit_status_end(int number); // СЃРѕСЃС‚РѕСЏРЅРёРµ РґРµРїРѕР·РёС‚Р°
+  void withdraw_interest(int number);// СЃРЅСЏС‚СЊ РїСЂРѕС†РµРЅС‚С‹
+  void close(int number);//РїРµСЂРµРІРµСЃС‚Рё РІСЃС‘ РЅР° Р·Р°СЂРїР»Р°С‚РЅС‹Р№ СЃС‡РµС‚
+  ~ProcessingCenter() //РґРµСЃС‚СЂСѓРєС‚РѕСЂ
   {}
 };
 ProcessingCenter::ProcessingCenter()
@@ -46,7 +46,7 @@ ProcessingCenter::ProcessingCenter(string _name, int _salary, int _deposit, int 
   deposit = _deposit;
   deposit_status = _deposit_status;
   password = _password;
-  full_name_.push_back(_name);// начало
+  full_name_.push_back(_name);// РЅР°С‡Р°Р»Рѕ
   salary_.push_back(_salary);
   deposit_.push_back(_deposit);
   deposit_status_.push_back(_deposit_status);
@@ -91,7 +91,7 @@ void ProcessingCenter::operations(int amount, int number, int time)
 {
   if (salary_[number - 1] < amount)
   {
-    cout << "Недостаточно средств!" << endl;
+    cout << "РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!" << endl;
     return;
   }
   deposit_[number - 1] = time;
