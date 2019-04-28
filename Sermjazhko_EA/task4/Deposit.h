@@ -115,10 +115,7 @@ bool Deposit::check_open()
 void Deposit::open_deposit(int time, int salary)
 {
   ProcessingCenter check;
-  if (check.get_deposit(account_number) != -1)
-    cout << "Депозит уже открыт." << endl;
-  else
-    check.operations(salary, account_number, time);
+  check.operations(salary, account_number, time);
 }
 int Deposit::deposit_()
 {
