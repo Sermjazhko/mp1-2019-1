@@ -68,16 +68,21 @@ int main()
         case 3:
         {
           int salary;
-          cout << "Введите количество месяцев, на которое хотите взять депозит (1 год - 12 месяцев, 2 года - 24, 3 года - 36)" << endl;
-          cin >> month_deposit;
-          while ((month_deposit != 3) && (month_deposit != 6) && (month_deposit != 12) && (month_deposit != 24) && (month_deposit != 36))
+          if (check1.check_open())
+            cout << "Депозит уже открыт." << endl;
+          else
           {
-            cout << "Неверно введены данные" << endl;
+            cout << "Введите количество месяцев, на которое хотите взять депозит (1 год - 12 месяцев, 2 года - 24, 3 года - 36)" << endl;
             cin >> month_deposit;
+            while ((month_deposit != 3) && (month_deposit != 6) && (month_deposit != 12) && (month_deposit != 24) && (month_deposit != 36))
+            {
+              cout << "Неверно введены данные" << endl;
+              cin >> month_deposit;
+            }
+            cout << "Сколько средств перевести?" << endl;
+            cin >> salary;
+            check1.open_deposit(month_deposit, salary);
           }
-          cout << "Сколько средств перевести?" << endl;
-          cin >> salary;
-          check1.open_deposit(month_deposit, salary);
         }
         break;
         case 4:
